@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: 'Georgia', serif;
-            background-color: #f7f0e8;
             color: #4b4b4b;
             line-height: 1.6;
             margin: 0;
@@ -15,27 +14,42 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
             text-align: center;
+            
+            /* Dreamy background GIF */
+            background-image: url('https://s14.gifyu.com/images/bNeu3.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
         }
+
         .container {
             max-width: 800px;
             padding: 40px;
-            background-color: #fff;
-            margin: 40px auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             border-radius: 15px;
+            z-index: 10;
         }
+
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 3em;
             color: #6a0572;
             margin-bottom: 20px;
         }
+
         .poem-section p {
             font-style: italic;
             margin: 15px 0;
             font-size: 1.1em;
+            color: #555;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Adds a soft glow */
         }
+
         .back-link {
             display: inline-block;
             margin-top: 30px;
@@ -44,6 +58,7 @@
             font-weight: bold;
             transition: color 0.3s ease;
         }
+
         .back-link:hover {
             color: #6a0572;
         }
@@ -54,7 +69,7 @@
         <h1>A Glimpse of My Dream Girl</h1>
         <div class="poem-section">
             <p>Her messy hair reminds me of Medusa, who is more beautiful than Athena.</p>
-            <p>Her smile can't be described, but it brightens my day like a supernova.</p>
+            <p>Her smile brightens my day like a supernova.</p>
             <p>Her lips, so beautiful, remind me of a Lotus bloom.</p>
             <p>She stands out like red roses, where all people are grey.</p>
         </div>
