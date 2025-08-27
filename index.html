@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>For My Varsha</title>
     <style>
+        /* ---------- page layout ---------- */
         body {
             font-family: 'Georgia', serif;
             color: #4b4b4b;
@@ -17,8 +18,6 @@
             justify-content: center;
             height: 100vh;
             text-align: center;
-            
-            /* Raining background GIF - Most reliable solution */
             background-image: url('https://s14.gifyu.com/images/bNeSo.gif');
             background-size: cover;
             background-position: center;
@@ -26,7 +25,9 @@
             position: relative;
         }
 
+        /* make container the positioning parent for the heart */
         .container {
+            position: relative; /* IMPORTANT: used by script to constrain movement */
             max-width: 800px;
             padding: 40px;
             background-color: rgba(255, 255, 255, 0.7);
@@ -49,22 +50,26 @@
             font-style: italic;
         }
 
+        /* ---------- heart styling & animation ---------- */
         .heart-icon {
-            font-size: 2em;
-            color: #d11c50; /* A romantic red */
+            position: absolute;             /* absolutely positioned inside .container */
+            left: 50%;
+            top: 90px;                      /* initial vertical offset under the title */
+            transform: translate(-50%, -50%); /* center the heart on left/top */
+            font-size: 2.5rem;
+            color: #d11c50;                 /* romantic red */
+            z-index: 20;
+            cursor: pointer;
+            user-select: none;
+            transition: left 0.35s ease, top 0.35s ease; /* smooth movement */
+            /* the pulse will include translate so the translate center stays applied */
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0%   { transform: translate(-50%,-50%) scale(1); }
+            50%  { transform: translate(-50%,-50%) scale(1.18); }
+            100% { transform: translate(-50%,-50%) scale(1); }
         }
 
         .nav-menu {
@@ -74,6 +79,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 25px;
+            margin-top: 140px; /* keep menu lower so heart has room to move */
         }
 
         .nav-menu a {
@@ -88,15 +94,28 @@
             color: #d11c50;
             transform: scale(1.1);
         }
+
+        /* small responsive tweak */
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2rem; }
+            .heart-icon { font-size: 2rem; top: 80px; }
+            .nav-menu { gap: 12px; margin-top: 120px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>For My <span style="color: #d11c50;">Varsha</span></h1>
-        <div class="heart-icon">&#10084;</div>
+
+        <!-- heart: clicking/tapping will also move it (touch support included) -->
+        <div class="heart-icon" id="heart" title="Catch me if you can!" role="button" aria-label="Moving heart">
+            &#10084;
+        </div>
+
         <p class="intro-text">
             I never felt like this, yet I know this shift, these sparks, this sweetness is making my heart race & mind excite.
         </p>
+
         <ul class="nav-menu">
             <li><a href="my_feelings.html">My Heart's Confession</a></li>
             <li><a href="my_rain.html">Rain that Echoes Your Name</a></li>
@@ -105,5 +124,93 @@
             <li><a href="my_mystery.html">The Silence Between Us</a></li>
         </ul>
     </div>
+
+    <script>
+    // Move the heart away when the pointer/touch touches it.
+    // No libraries required.
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.container');
+        const heart = document.getElementById('heart');
+
+        // small cooldown so it doesn't flicker crazy-fast if user chases it
+        let busy = false;
+
+        // helper: distance
+        function dist(ax, ay, bx, by) {
+            const dx = ax - bx, dy = ay - by;
+            return Math.hypot(dx, dy);
+        }
+
+        // compute a new (x,y) within the container so the heart is at least minDist away
+        function chooseNewPosAwayFrom(containerRect, pointerX, pointerY, heartRadius) {
+            const cw = containerRect.width;
+            const ch = containerRect.height;
+
+            // desired minimum distance between pointer and heart center
+            const minDist = Math.max(110, Math.min(220, Math.floor(Math.min(cw, ch) / 4)));
+
+            let nx, ny, attempts = 0;
+            // try random positions (safe bounded number of attempts)
+            while (attempts < 60) {
+                nx = heartRadius + Math.random() * (cw - 2 * heartRadius);
+                ny = heartRadius + Math.random() * (ch - 2 * heartRadius);
+                if (dist(nx, ny, pointerX, pointerY) >= minDist) return { x: nx, y: ny };
+                attempts++;
+            }
+
+            // fallback: put in roughly the opposite quadrant
+            nx = (pointerX < cw/2) ? cw - heartRadius - 10 : heartRadius + 10;
+            ny = (pointerY < ch/2) ? ch - heartRadius - 10 : heartRadius + 10;
+            return { x: nx, y: ny };
+        }
+
+        function moveHeart(pointerClientX, pointerClientY) {
+            if (busy) return;
+            busy = true;
+            setTimeout(() => busy = false, 380); // a little longer than CSS transition
+
+            const containerRect = container.getBoundingClientRect();
+            const heartRect = heart.getBoundingClientRect();
+            const hr = Math.max(heartRect.width, heartRect.height) / 2;
+
+            // convert pointer coords to coordinates relative to the container
+            const px = pointerClientX - containerRect.left;
+            const py = pointerClientY - containerRect.top;
+
+            const newPos = chooseNewPosAwayFrom(containerRect, px, py, hr);
+
+            // set left/top to the new center coordinates (CSS transform translate(-50%,-50%) keeps heart centered)
+            heart.style.left = Math.round(newPos.x) + 'px';
+            heart.style.top  = Math.round(newPos.y) + 'px';
+        }
+
+        // pointerenter gives precise clientX/Y when pointer just entered the heart.
+        heart.addEventListener('pointerenter', (e) => {
+            // use the actual event coordinates so the move is calculated from the real pointer
+            moveHeart(e.clientX, e.clientY);
+        });
+
+        // if user taps on touch devices, move it too
+        heart.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            if (touch) moveHeart(touch.clientX, touch.clientY);
+        }, {passive: true});
+
+        // small enhancement: if user clicks the heart, move it too
+        heart.addEventListener('click', (e) => {
+            moveHeart(e.clientX, e.clientY);
+        });
+
+        // optional: if user drags pointer in the container we track last position so pointerenter has the latest pointer position
+        // (not strictly required, pointerenter event already contains coordinates)
+        container.addEventListener('pointermove', (e) => {
+            // nothing required here — we rely on pointerenter coordinates.
+            // This listener is a placeholder if you want more dynamic behavior later.
+        });
+
+    });
+    </script>
 </body>
 </html>
+
