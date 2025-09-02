@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline of Our Memories </title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f7f0e8;
+            color: #4b4b4b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            /* Raining background GIF */
+            background-image: url('https://s14.gifyu.com/images/bTw0I.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin: 40px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            color: #6a0572;
+            margin-bottom: 40px;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 700px;
+            height: 700px;
+            margin: 0 auto;
+        }
+
+        .heart-path::before {
+            content: "♡";
+            font-size: 700px;
+            color: #d11c50;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .timeline-item {
+            position: absolute;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #f0e6f2;
+            z-index: 2;
+        }
+
+        .timeline-item .date {
+            font-weight: bold;
+            color: #6a0572;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item .description {
+            font-size: 0.9em;
+        }
+        
+        #item1 { top: 75%; left: 35%; }
+        #item2 { top: 45%; left: 10%; }
+        #item3 { top: 25%; left: 30%; }
+        #item4 { top: 45%; left: 65%; }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 50px;
+            text-decoration: none;
+            color: #8c429d;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: #6a0572;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Timeline of Our Memories (4)</h1>
+        <div class="heart-container">
+            <div class="heart-path"></div>
+            <div id="item1" class="timeline-item">
+                <div class="date">22-05-25</div>
+                <div class="description">Our first MBA sem exam and Varsha's CA exam.</div>
+            </div>
+            <div id="item2" class="timeline-item">
+                <div class="date">01-06-25</div>
+                <div class="description">Varsha started talking about love.</div>
+            </div>
+            <div id="item3" class="timeline-item">
+                <div class="date">03-06-25</div>
+                <div class="description">I made a report on love psychology and sent it to her.</div>
+            </div>
+            <div id="item4" class="timeline-item">
+                <div class="date">05-06-25</div>
+                <div class="description">I saw the specs she wears and sent her a pic.</div>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="timeline3.html" class="back-link">&larr; Previous Page</a>
+            <a href="timeline5.html" class="back-link">Next Page &rarr;</a>
+        </div>
+        <a href="index.html" class="back-link">&larr; Back to the menu</a>
+    </div>
+</body>
+</html>
