@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs for Varsha</title>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #f7f0e8;
+            color: #4b4b4b;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-radius: 15px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #6a0572;
+            margin-bottom: 20px;
+        }
+
+        .varsha-name {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 50px;
+            font-size: 5em;
+        }
+        
+        .letter {
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .letter:hover {
+            color: #d11c50;
+            transform: scale(1.2);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 50px;
+            text-decoration: none;
+            color: #8c429d;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #6a0572;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A Symphony for You</h1>
+        <div class="varsha-name">
+            <span class="letter" data-song="Charlie Puth - Dangerously [Official Video].mp3">V</span>
+            <span class="letter" data-song="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">A</span>
+            <span class="letter" data-song="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">R</span>
+            <span class="letter" data-song="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3">S</span>
+            <span class="letter" data-song="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3">H</span>
+            <span class="letter" data-song="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3">A</span>
+        </div>
+        <a href="index.html" class="back-link">&larr; Back to the menu</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const letters = document.querySelectorAll('.letter');
+            let audio = new Audio();
+
+            letters.forEach(letter => {
+                letter.addEventListener('mouseenter', () => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    const songUrl = letter.getAttribute('data-song');
+                    audio = new Audio(songUrl);
+                    audio.play();
+                });
+                letter.addEventListener('mouseleave', () => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
