@@ -18,12 +18,18 @@
             justify-content: center;
             height: 100vh;
             text-align: center;
+            
+            /* Background image */
+            background-image: url('https://s14.gifyu.com/images/bTIaM.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .container {
             max-width: 800px;
             padding: 40px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.85);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             border-radius: 15px;
         }
@@ -40,16 +46,51 @@
             gap: 15px;
             margin-top: 50px;
             font-size: 5em;
+            font-weight: bold;
         }
         
         .letter {
             cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            color: #8c429d;
         }
 
-        .letter:hover {
+        /* Creative Hover Effects for each letter */
+        .letter:nth-child(1):hover { /* V */
             color: #d11c50;
-            transform: scale(1.2);
+            transform: scale(1.2) rotate(-5deg);
+            text-shadow: 4px 4px 8px rgba(209, 28, 80, 0.4);
+        }
+
+        .letter:nth-child(2):hover { /* A */
+            color: #ff9900;
+            transform: scale(1.2) translateY(-10px);
+            text-shadow: 4px 4px 8px rgba(255, 153, 0, 0.4);
+        }
+
+        .letter:nth-child(3):hover { /* R */
+            color: #ff0066;
+            transform: scale(1.2) rotate(5deg);
+            text-shadow: 4px 4px 8px rgba(255, 0, 102, 0.4);
+        }
+
+        .letter:nth-child(4):hover { /* S */
+            color: #6600ff;
+            transform: scale(1.2) translateY(10px);
+            text-shadow: 4px 4px 8px rgba(102, 0, 255, 0.4);
+        }
+        
+        .letter:nth-child(5):hover { /* H */
+            color: #00b3b3;
+            transform: scale(1.2) rotate(-5deg);
+            text-shadow: 4px 4px 8px rgba(0, 179, 179, 0.4);
+        }
+        
+        .letter:nth-child(6):hover { /* A */
+            color: #ff3333;
+            transform: scale(1.2) rotate(5deg);
+            text-shadow: 4px 4px 8px rgba(255, 51, 51, 0.4);
         }
 
         .back-link {
